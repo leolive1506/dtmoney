@@ -206,3 +206,116 @@ html {
 	3. [Miragejs](https://miragejs.com/) - Usado na aplicação
 		* Constroi api fake dentro do frontend
 		* Tem banco de dados integrado, pode fazer relacionamento, preecher dados com dados fictícios
+
+	* Configurando Miragejs
+	```
+	yarn add miragejs
+	```
+
+	```tsx
+	useEffect(() => {
+        fetch("/transactions")
+            .then(res => res.json())
+            .then(res => console.log(res.data))
+    }, [])
+
+	import { createServer } from "miragejs"
+
+	createServer({
+		routes() {
+			this.namespace = "api";
+			this.get("/transactions", () => {
+			return [
+				{
+				id: 1,
+				title: "Transaction 1",
+				amount: 400,
+				type: "deposit",
+				category: "Food",
+				createdAt: new Date()
+				}
+			]
+		})
+	}
+
+	})
+	```
+
+# Axios
+* Pq usar ele em vez do fetch?
+	* Pq fetch acaba precisando que coloca todo end do app
+	* Consegue interceptar req e res pra api e converte pra json automaticamente
+
+	```
+	yarn add axios
+	```
+
+	* Criar arquivo api.ts
+	```tsx
+	// dentro services front, tem intuito de ser serviços de dados
+
+	import axios from 'axios'
+
+	export const api = axios.create({
+		baseURL: "http://localhost:3000/api"
+	})
+	```
+
+	* No que vai fazer req
+	```tsx
+	useEffect(() => {
+        api.get("/transactions")
+            .then(data => console.log(data))
+    }, [])
+	```
+
+# 4. modal e forms
+## Modal
+* Biblioteca chamada [react-modal](https://github.com/reactjs/react-modal)
+	* Traz funcionalidades prontas do modal
+		* Como clicar esc e fechar
+		* Clicar parte de fora e fechar
+
+```
+yarn add react-modal
+```
+* Cria um estado que anota pra ver se modal está aberto ou fechado
+```tsx
+// qual el root da aplicação p modal, assim coloca dentro desse root e não dentro body direto
+Modal.setAppElement('#yourAppElement')
+function App() {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  // quando abrir modal
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  // fechar modal
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  return (
+    <div>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal
+		//   indica se modal está aberto ou fechado
+        isOpen={modalIsOpen}
+		// diz oq deve fazer quando pedir pra fechar modal(clicar esc, clicar fora)
+        onRequestClose={closeModal}
+      >
+	<restomodal></restomodal>
+	</div>
+```
+
+## Definir interface type function como props
+```tsx
+interface HeaderProps {
+	// nesse caso não recebe nenhum param, e não retorna nada
+    onOpenNewTransactionModal: () => void
+}
+
+	export function Header({ onOpenNewTransactionModal }: HeaderProps) {}
+```
