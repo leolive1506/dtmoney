@@ -60,6 +60,45 @@ export function App() {
 }
 ```
 
+## Dicas css
+* Fazer embaçar no hover
+```scss
+&:hover {
+	filter: blur(5px)
+}
+```
+
+* Fazer el escurecer no hover
+```scss
+button {
+	
+	transition: filter 0.2s;
+
+	&:hover {
+		filter: brightness(0.9)
+	}
+}
+```
+
+* Por padrão strong vem display inline
+	* Margin não funciona
+
+* Pegar mesmo tipo el so que com classe diferente
+```scss
+div {
+
+	&.highlight-background {
+		background: var(--green)
+	}
+}
+```
+
+* Por padrão table não oculpa 100% width
+* Dar espaçamento table
+```scss
+table {border-spacing: 0 0.5}
+```
+
 ### Medias das fonts
 ```css
 html {
@@ -148,3 +187,22 @@ html {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 ```
 * Faz pré conexão com google fonts antes de tudo, carrega 25% mais rápido
+
+
+# 3. Consumindo API
+* Quando não tem backend pronto, tem algumas ferramentas pra simular API's
+	* Utilizar em ambiente de desenvolvimente e testes, jamais em produção
+
+* 3 Ferramentas
+	1. json server
+		* Permite ao criar arquivo json, com estrutura obj, cada chave é convertido em uma rota
+		* Não utilidado na aplicação pq ele não executa em paralelo
+	
+	2. msw
+		* add funcionamento fictício para camada de network da nossa aplicação
+			* as requisições feitas vão para aba network da guia desenvolvedor
+		
+
+	3. [Miragejs](https://miragejs.com/) - Usado na aplicação
+		* Constroi api fake dentro do frontend
+		* Tem banco de dados integrado, pode fazer relacionamento, preecher dados com dados fictícios
