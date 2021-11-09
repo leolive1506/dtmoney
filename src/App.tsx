@@ -2,10 +2,12 @@ import { useState } from 'react';
 import Modal from 'react-modal'
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
+import { NewTransactionModal } from './components/NewTransactionModal';
 import { GlobalStyle } from "./styles/global";
 
 
 export function App() {
+  // funções e estador ficam para dar acesso no header e tbm no newTransactionModal
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false)
 
   // quando criar função quando ação for executada a partir ação user (ex: Clique botão) começar com handle
@@ -24,12 +26,10 @@ export function App() {
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
       <Dashboard />
 
-      <Modal
+      <NewTransactionModal
         isOpen={isNewTransactionModalOpen}
         onRequestClose={handleCloseNewTransactionModal}
-      >
-        <h2>Cadastrar transação</h2>
-      </Modal>
+      />
       <GlobalStyle />
     </>
   );

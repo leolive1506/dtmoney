@@ -281,6 +281,7 @@ yarn add react-modal
 ```
 * Cria um estado que anota pra ver se modal está aberto ou fechado
 ```tsx
+import Modal from 'react-modal'
 // qual el root da aplicação p modal, assim coloca dentro desse root e não dentro body direto
 Modal.setAppElement('#yourAppElement')
 function App() {
