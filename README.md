@@ -82,6 +82,7 @@ button {
 
 * Por padrão strong vem display inline
 	* Margin não funciona
+	* usar inline-block
 
 * Pegar mesmo tipo el so que com classe diferente
 ```scss
@@ -180,6 +181,20 @@ html {
 
 ```
 
+
+### Trabalhar com biblioteca de cores ( Polished )
+* Se tiver usando styled-components tem como usar funções js para manipulação de cores
+```tsx
+// yarn add polished
+import { darken } from "polished"
+
+export const Containerbutton = styled.div`
+	&:hover {
+		// escurecendo em 10%
+		border-color: ${darken(0.1, 'color a escurecer')}
+	}
+`
+```
 ### Dica inserir font
 * Por recomendação react pegar link inserir html
 * Antes de tudo, colocar a parte abaixo na pag
@@ -334,4 +349,47 @@ interface HeaderProps {
 }
 
 	export function Header({ onOpenNewTransactionModal }: HeaderProps) {}
+```
+
+## Ver se um botão está selecionado
+```tsx
+const [type, setType] = useState('deposit')
+
+<button
+	type="button"
+	className={type === 'deposit' ? "active" : ""}
+	onClick={() => { setType('deposit') }}
+>
+	<img src={incomeImg} alt="Entrada" />
+	<span>Entrada</span>
+</button>
+```
+
+* OU transforma o botão em um component no styled-components
+	* Assim ele pode receber novas propriedades
+	* Estiliza pela propriedade
+	* Pode passar nome que quiser
+
+```tsx
+
+<RadioBox
+	type="button"
+	onClick={() => { setType('deposit') }}
+	isActive={type === 'deposit'}
+>
+	<img src={incomeImg} alt="Entrada" />
+	<span>Entrada</span>
+</RadioBox>
+```
+
+```ts
+// retornar erro mas é so criar interface em cima do radioBox
+interface RadioBoxProps {
+    isActive: boolean
+}
+
+export const RadioBox = styled.button<RadioBoxProps>`
+// quando passar função dentro styled components, ela é chamada automáticamente passando as props do componente
+	background: ${(props) => props.isActive ? "#eee" : "transaparent"}
+`
 ```

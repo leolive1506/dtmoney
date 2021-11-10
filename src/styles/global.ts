@@ -20,11 +20,11 @@ export const GlobalStyle = createGlobalStyle`
     // font-size padrão 16px (ideal desktop)
     html {
         @media (max-width: 1080px) { /* 15px */
-            font-size: 93.75% 
+            font-size: 93.75%; 
         }
 
         @media (max-width: 720px) { /* 14px */
-            font-size: 87.5%
+            font-size: 87.5%;
         }
     }
 
@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     h1, h2, h3, h4, h5, h6, strong {
-		font-weight: 600
+		font-weight: 600;
 	}
 
     body {
@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
 
     [disabled] {
         opacity: 0.6;
-        cursor: not-allowed
+        cursor: not-allowed;
     }
 
     .react-modal-overlay {
@@ -63,16 +63,32 @@ export const GlobalStyle = createGlobalStyle`
 
         display: flex;
         align-items: center;
-        justify-content: center
+        justify-content: center;
     }
 
-    .react-modal-content {
+    .react-modal-content {        
         width: 100%;
         max-width: 576px;
         background: var(--background);
         padding: 3rem;
         position: relative;
         border-radius: 0.24rem;
+        display: flex;
+        flex-direction: column-reverse
+    }
+
+    .react-modal-close {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        border: 0;
+        background: transparent;
+
+        transition: filter 0.2s;
+
+        &:hover {
+            filter: brightness(0.8)
+        }
     }
 
 `
