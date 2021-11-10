@@ -272,6 +272,7 @@ html {
 # 4. modal e forms
 ## Modal
 * Biblioteca chamada [react-modal](https://github.com/reactjs/react-modal)
+	* [Documentação](http://reactcommunity.org/react-modal/)
 	* Traz funcionalidades prontas do modal
 		* Como clicar esc e fechar
 		* Clicar parte de fora e fechar
@@ -306,9 +307,23 @@ function App() {
         isOpen={modalIsOpen}
 		// diz oq deve fazer quando pedir pra fechar modal(clicar esc, clicar fora)
         onRequestClose={closeModal}
+		// resetar a formatação padrão e estilizar
+		overlayClassName="name-class-overlay"
+		// vai ser aplicado ao content
+		className="react-modal-content"
       >
 	<restomodal></restomodal>
 	</div>
+```
+
+```scss
+.react-modal-overlay {
+
+}
+
+.react-modal-content {
+	
+}
 ```
 
 ## Definir interface type function como props
