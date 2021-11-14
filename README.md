@@ -1,9 +1,3 @@
-dt money 
-	muita criatividade envolvida
-	d de diego e t thiago
-
-	diego explicando cursor: not-allowed
-		"plaquinha de não fume" KKKKKKKKKKK
 # 1. Estrutura da aplicação
 ## create react-app
 ```
@@ -60,7 +54,8 @@ export function App() {
 }
 ```
 
-## Dicas css
+## Dicas
+### css
 * Fazer embaçar no hover
 ```scss
 &:hover {
@@ -98,6 +93,14 @@ div {
 * Dar espaçamento table
 ```scss
 table {border-spacing: 0 0.5}
+```
+
+### JS, JSX, TS, TSX
+* No js tem como transformar em numero uma string recebida da dom da seguinte forma
+```jsx
+onChange={e => setValue(+e.target.value)}
+// mesmo que
+onChange={e => setValue(Number(e.target.value))}
 ```
 
 ### Medias das fonts
@@ -195,6 +198,17 @@ export const Containerbutton = styled.div`
 	}
 `
 ```
+
+#### Não consegue ver as variaveis css
+	* Mas existe uma funcionalidade dentro styled components que chama tema
+		* Ai consegue acesso as variaveis no css e js
+
+#### transparentize
+	* Deixar uma cor mais transparente	
+	* sintaxe
+```js
+transparentize(0.9, #000)
+```
 ### Dica inserir font
 * Por recomendação react pegar link inserir html
 * Antes de tudo, colocar a parte abaixo na pag
@@ -202,6 +216,7 @@ export const Containerbutton = styled.div`
 <link rel="preconnect" href="https://fonts.googleapis.com">
 ```
 * Faz pré conexão com google fonts antes de tudo, carrega 25% mais rápido
+
 
 
 # 3. Consumindo API
@@ -255,6 +270,29 @@ export const Containerbutton = styled.div`
 
 	})
 	```
+
+* Criar uma rota para inserção de dados
+```ts
+this.post("/transacitons", (schema, request) => {
+	const data = JSON.parse(request.requestBody)
+
+	return data
+})
+```
+
+* Criar banco no api fake
+```ts
+models: { //banco
+	transaction: Model // nome primeira table: tipo
+},
+```
+
+* Inserir no banco
+	* Dentro de this.post("/transacitons)
+
+```ts
+return schema.create("nomeTable", data)
+```
 
 # Axios
 * Pq usar ele em vez do fetch?
@@ -392,4 +430,21 @@ export const RadioBox = styled.button<RadioBoxProps>`
 // quando passar função dentro styled components, ela é chamada automáticamente passando as props do componente
 	background: ${(props) => props.isActive ? "#eee" : "transaparent"}
 `
+```
+
+# Formatação com Intl
+* API nativa ja
+* Formatar números
+```js
+new Intl.NumberFormat('pt-BR', {
+	style: 'currency',
+	currency: 'BRL'
+}).format(transaction.amount)
+```
+
+* Formatar Data
+```js
+ new Intl.DateTimeFormat('pt-BR').format(
+	new Date(transaction.createdAt)
+)
 ```
