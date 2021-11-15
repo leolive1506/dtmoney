@@ -103,6 +103,21 @@ onChange={e => setValue(+e.target.value)}
 onChange={e => setValue(Number(e.target.value))}
 ```
 
+* Herdar uma interface
+```ts
+interface Transaction {
+    id: number,
+    title: string,
+    type: string,
+    category: string,
+    amount: number,
+    createdAt: string
+}
+
+type TransactionInput = Omit<Transaction, 'id' | 'createdAt'> // ignora o id e createdAt
+
+type TransactionInput = Pick<Transaction, 'title' | 'amount' | 'type' | 'category'> // selecionar os desejados
+```
 ### Medias das fonts
 ```css
 html {
@@ -447,4 +462,71 @@ new Intl.NumberFormat('pt-BR', {
  new Intl.DateTimeFormat('pt-BR').format(
 	new Date(transaction.createdAt)
 )
+```
+
+
+# 5. Contextos e hooks
+## Introdução a contextos
+* Pq usar e quando
+	* Acessar dados de um componente dentro do outro
+	* Daria para resolver passando os states para componente acima dele
+		* Porém pode ficar meio sem nexo
+		* Pode continuar carregando informações sem necessidade
+		* Pode cair em problema chamado prop drilling
+			* Quando fica passando uma propriedade vários subniveis para baixo
+			* E não são bem propriedades e sim dados que quer passar de um component para outro
+
+	* Em casos que precisa compartilhar uma informação um pouco mais complexa ou não parece estar no lugar correto, geralmente vai utilizar contextos
+	* <h2>Resumo de que serve contextos</h2>
+		* <strong>Compartilhamento de estado entre vários componentes da aplicação, independente de onde esses componentes estejam</strong>
+
+## Forma simples de Criar
+```ts
+import { createContext } from 'react'
+
+export const TransactionsContexts = createContext([]) //valor que vai iniciar
+```
+
+* Para acessar essas informações a partir de qual componente da aplicação utilizar o Provider
+	* Pode colocar por volta de todo o App
+	```tsx
+	export function App() {
+		return(
+			<TransactionsContexts.Provider value={[]}> // pede um value que é o valor atual do contexto
+			
+			</TransactionsContexts.Provider>
+		)
+	}
+	```
+
+* Caso quiser que o contexto esteja para apenas alguns componentes, colocar o Provider pro volta deles somente
+	* Da forma feita no exemplo todos os componentes tem acesso a eles
+
+* Para obter o valor de um contexto em um componente
+	1. Usando uma API do react (forma antiga)
+	```tsx
+	<TransactionsContexts.Consumer>
+		{(data) => {
+			console.log(data)
+			return <p>ok</p>
+		}}
+	</TransactionsContexts.Consumer>
+	```
+
+	2. A partir dos hooks veio o useContext
+	```tsx
+	const data = useContext(TransactionsContexts)
+	```
+
+* Para acessar pode mover lógica para componente pai e no value colocar o state
+	* Mas se ocorrer de ter mais de um contexto pode começa ficar complicado e poluir muito component App
+
+	* Solução é no arquivo do contexto exportar uma função com a lógica e retornar o File.Provider (no ex: TransactionsContext.tsx)
+
+* Props children
+	* ReactNode aceita qualquer tipo de conteúdo válido p react
+```tsx
+interface InterfaceDoChildrenProps {
+	children: ReactNode
+}
 ```
