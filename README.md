@@ -118,6 +118,14 @@ type TransactionInput = Omit<Transaction, 'id' | 'createdAt'> // ignora o id e c
 
 type TransactionInput = Pick<Transaction, 'title' | 'amount' | 'type' | 'category'> // selecionar os desejados
 ```
+
+* reduce
+```js
+const teste = [1, 2, 3, 4]
+// recebe um acumulador e valor atual
+teste.reduce((acc, valorAtual) => {return acc + valorAtual}, valorInicial)
+// resultado -> 10
+```
 ### Medias das fonts
 ```css
 html {
@@ -481,6 +489,7 @@ new Intl.NumberFormat('pt-BR', {
 		* <strong>Compartilhamento de estado entre vários componentes da aplicação, independente de onde esses componentes estejam</strong>
 
 ## Forma simples de Criar
+
 ```ts
 import { createContext } from 'react'
 
@@ -529,4 +538,24 @@ export const TransactionsContexts = createContext([]) //valor que vai iniciar
 interface InterfaceDoChildrenProps {
 	children: ReactNode
 }
+```
+
+
+
+## Criando hooks
+
+* Como vai ser um hook, renomear o arquivo para `useTransactions.tsx`
+* No context criar
+```tsx
+
+export function useTransaction() {
+    const context = useContext(TransactionsContext)
+
+    return context
+}
+```
+
+* Usar no aquivos
+```tsx
+const { createTransaction } = useTransaction()
 ```
